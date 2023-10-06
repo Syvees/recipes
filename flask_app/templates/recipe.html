@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <title>Recipe Share</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Welcome, {{session["logged_in_first_name"]}}</h1>
+            </div>
+            <div class="col" style="margin-top: 15px;">
+                <a href="/recipes" style="margin-right: 40px;">back to recipes</a>
+                <a href="/logout">logout</a> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" style="margin-top: 20px;">
+                <h2>{{one_recipe.name}}</h2>
+            </div>
+            <div class="col" style="margin-top: 20px;">
+                <p>Posted by: {{one_recipe.cook.first_name}}</p>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>Description:</td>
+                    <td>{{one_recipe.description}}</td>
+                </tr>
+                <tr>
+                    <td>Under 30 Minutes?</td>
+                    <td>{{one_recipe.under_30_mins}}</td>
+                </tr>
+                <tr>
+                    <td>Instructions:</td>
+                    <td>{{one_recipe.instructions}}</td>
+                </tr>
+                <tr>
+                    <td>Date Made:</td>
+                    <td>{{one_recipe.cooked_date}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

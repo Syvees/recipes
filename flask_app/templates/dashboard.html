@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <title>Recipe Share</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Welcome, {{session["logged_in_first_name"]}}</h1>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="all_recipes">All posted recipes:</p>
+            </div>
+            <div class="col" style="margin-top: 10px;">
+                <a href="/recipes/new" style="margin-right: 40px;">+ create</a>
+                <a href="/logout">logout</a> 
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Under 30 minutes</th>
+                        <th>Posted By</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for one_recipe in recipes %}
+                    <tr>
+                        <td>{{one_recipe.name}}</td>
+                        <td>{{one_recipe.under_30_mins}}</td>
+                        <td>{{one_recipe.cook.first_name}}</td>
+                        <td><a href="/recipes/{{one_recipe.id}}">view recipe</a> {% if session["logged_in_id"] == one_recipe.cook.id %}|<a href="/recipes/edit/{{one_recipe.id}}">edit</a> |<a href="/recipes/delete/{{one_recipe.id}}">delete</a></td>
+                            {% endif %}                    
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

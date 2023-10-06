@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <title>Recipe Share</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Edit Recipe</h1>
+                {% with messages = get_flashed_messages(category_filter=["add_recipe"]) %} <!-- declare a variable called messages -->
+                {% if messages %} <!-- check if there are any messages -->
+                    {% for message in messages %} <!-- loop through the messages -->
+                        <p class="error">{{message}}</p><!-- display each message in a paragraph tag -->
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div class="col" style="margin-top: 15px;">
+                <a href="/recipes" style="margin-right: 40px;">back to recipes</a>
+                <a href="/logout">logout</a> 
+            </div>
+        </div>
+        <div class="row">
+            <form action="/recipes/update/{{one_recipe.id}}" method="POST">
+                <div class="col">
+                    <div class="d-flex flex-column">
+                        <label for="name">Name:</label>
+                        <input type="text" name="name" value="{{one_recipe.name}}">
+                        <label for="description">Description:</label>
+                        <input type="text" name="description" value="{{one_recipe.description}}">
+                        <label for="instructions">Instructions:</label>
+                        <textarea name="instructions" cols="40" rows="5">{{one_recipe.instructions}}</textarea>
+                        <label for="cooked_date">Date Cooked/Made:</label>
+                        <input type="date" id="cooked_date" name="cooked_date" value="{{one_recipe.cooked_date}}">
+                    </div>
+                        <label for="under_30_mins">Under 30 minutes?</label><br> <!--CONDITIONAL RENDERING-->
+                        {% if one_recipe.under_30_mins == "Yes":  %}
+                        <input type="radio" id="under_30_mins" name="under_30_mins" value="Yes" checked>
+                        <label for="under_30_mins">Yes</label>
+                        <input type="radio" id="under_30_mins" name="under_30_mins" value="No">
+                        <label for="under_30_mins">No</label><br>
+                        {% else %}
+                        <input type="radio" id="under_30_mins" name="under_30_mins" value="Yes">
+                        <label for="under_30_mins">Yes</label>
+                        <input type="radio" id="under_30_mins" name="under_30_mins" value="No" checked>
+                        <label for="under_30_mins">No</label><br>
+                        {% endif %}
+                    <br>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
